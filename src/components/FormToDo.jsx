@@ -25,7 +25,7 @@ function FormToDo({ onAddToDo }) {
     return (
         <>
             <form className="flex w-full max-w-md mb-6" onSubmit={listSubmit} >
-                <input type="text" id="title" name="title" onChange={titleHandler} className="flex-grow p-3 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg bg-white" value={userText}  placeholder="Aggiungi una nuova attività..." />
+                <input type="text" id="title" name="title" onChange={titleHandler} className="flex-grow p-3 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg bg-white" value={userText}  placeholder="Aggiungi attività..." />
                 
                 <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-r-lg transition duration-300 ease-in-out text-lg">Salva</button>
             </form>
