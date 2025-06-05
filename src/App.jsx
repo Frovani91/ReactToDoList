@@ -4,11 +4,30 @@ import ToDoList from './components/ToDoList';
 import './App.css';
 
 function App() {
-  const [list, setList] = useState([]);
-  const [idCreator, setIdCreator] = useState(1);
+  // Inizializza la lista cercando prima nel localStorage
+  // Se non c'è nulla, usa un array vuoto
+  const [list, setList] = useState(() => {
+    const savedList = localStorage.getItem('todoList');
+    return savedList ? JSON.parse(savedList) : [];
+  });
+
+  // Inizializza idCreator in base alla lista caricata
+  // Trova l'ID massimo esistente e aggiungi 1, altrimenti inizia da 1
+  const [idCreator, setIdCreator] = useState(() => {
+    const savedList = localStorage.getItem('todoList');
+    if (savedList) {
+      const parsedList = JSON.parse(savedList);
+      if (parsedList.length > 0) {
+        const maxId = Math.max(...parsedList.map(item => item.id));
+        return maxId + 1;
+      }
+    }
+    return 1;
+  });
+
   const [installPrompt, setInstallPrompt] = useState(null);
-  const [isIOS, setIsIOS] = useState(false); // Nuovo stato per rilevare iOS
-  const [isPWAInstalled, setIsPWAInstalled] = useState(false); // Nuovo stato per verificare se PWA è già installata
+  const [isIOS, setIsIOS] = useState(false);
+  const [isPWAInstalled, setIsPWAInstalled] = useState(false);
 
   useEffect(() => {
     // Rilevamento iOS
@@ -36,12 +55,17 @@ function App() {
       console.log('PWA installata con successo!');
     });
 
-
     return () => {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-      window.removeEventListener('appinstalled', () => { }); // Pulisci anche questo listener
+      window.removeEventListener('appinstalled', () => { });
     };
   }, []);
+
+  // Questo useEffect si attiva ogni volta che la 'list' cambia
+  // e salva la lista aggiornata nel localStorage
+  useEffect(() => {
+    localStorage.setItem('todoList', JSON.stringify(list));
+  }, [list]); // Dipendenza: si esegue solo quando 'list' cambia
 
   const handleInstallClick = async () => {
     if (!installPrompt) {
@@ -56,7 +80,7 @@ function App() {
 
     if (outcome === 'accepted') {
       setInstallPrompt(null);
-      setIsPWAInstalled(true); // Aggiorna lo stato anche qui
+      setIsPWAInstalled(true);
     }
   };
 
