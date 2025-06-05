@@ -11,9 +11,11 @@
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
@@ -22,6 +24,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -39,4 +42,25 @@
 
 .read-the-docs {
   color: #888;
+}
+
+.text-wrap-fix {
+  /* overflow-wrap è la proprietà standard e preferita */
+  overflow-wrap: break-word; 
+  /* word-break: break-word è un fallback per browser più vecchi o per una maggiore compatibilità, ma può rompere le parole in punti arbitrari. */
+  word-break: break-word; /* Fornisce un fallback per browser che potrebbero non supportare overflow-wrap o lo interpretano diversamente */
+  /* word-break: normal; lo puoi rimuovere se usi break-word sopra, dato che break-word è più specifico */
+  hyphens: auto; /* Per migliorare la leggibilità rompendo le parole con i trattini */
+}
+
+/* Potrebbe anche aiutare assicurarsi che i contenitori siano sempre al 100% della larghezza disponibile */
+.w-full {
+  width: 100%;
+}
+
+.max-w-md {
+  max-width: 28rem;
+  /* tailwind default per max-w-md */
+  width: 100%;
+  /* Assicura che si stringa */
 }
